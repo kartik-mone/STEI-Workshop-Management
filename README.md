@@ -4,7 +4,6 @@
 A Workshop Management System built with **FastAPI**, designed to manage workshops, batches, students, categories, and quotes.  
 This project provides a structured backend API for workshop administration.
 
----
 
 ## Features
 - **User Authentication**
@@ -28,11 +27,10 @@ This project provides a structured backend API for workshop administration.
 - **Database**
   - MySQL database integration (`db.py` and `Database.sql`)
 
----
 
 ##  Project Structure
 
-
+```bash
 STEI WORKSHOP MANAGEMENT - FASTAPI
 │── Login/
 │   └── login.py
@@ -54,11 +52,9 @@ STEI WORKSHOP MANAGEMENT - FASTAPI
 │── main.py                     # FastAPI entry point
 │── .gitignore
 │── README.md
+```
 
-
----
-
-## ⚙️ Installation
+##  Installation
 
 ### 1. Clone Repository
 ```bash
