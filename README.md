@@ -77,7 +77,7 @@ source venv/bin/activate  # On Linux/Mac
 pip install -r requirements.txt
 ```
 
----
+
 
 ##  Database Setup
 
@@ -100,7 +100,7 @@ MYSQL_CONFIG = {
 
 ```
 
----
+
 
 ##  Run the Server
 
@@ -111,7 +111,7 @@ uvicorn main:app --reload
 By default, the API runs on:
  `http://127.0.0.1:8000`
 
----
+
 
 ##  API Endpoints
 
@@ -147,7 +147,7 @@ By default, the API runs on:
 * `PUT /quotes/{id}` → Update quote
 * `DELETE /quotes/{id}` → Delete quote
 
----
+
 
 ## Tech Stack
 
@@ -158,5 +158,4 @@ By default, the API runs on:
 * **Uvicorn**
 * **PyMySQL**
 
----
 
