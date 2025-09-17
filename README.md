@@ -1,6 +1,4 @@
 
-
-```markdown
 # STEI Workshop Management - FastAPI
 
 A Workshop Management System built with **FastAPI**, designed to manage workshops, batches, students, categories, and quotes.  
@@ -33,7 +31,7 @@ This project provides a structured backend API for workshop administration.
 ---
 
 ##  Project Structure
-```
+
 
 STEI WORKSHOP MANAGEMENT - FASTAPI
 │── Login/
@@ -57,7 +55,6 @@ STEI WORKSHOP MANAGEMENT - FASTAPI
 │── .gitignore
 │── README.md
 
-````
 
 ---
 
@@ -167,7 +164,3 @@ By default, the API runs on:
 
 ---
 
-
-
-Would you like me to also add **example requests (JSON bodies)** for each endpoint in the README so you can test quickly with Postman?
-```
