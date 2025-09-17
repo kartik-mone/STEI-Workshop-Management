@@ -4,4 +4,5 @@ pydantic
 pydantic[email]
 pymysql
 python-dotenv
-
+PyJWT
+cryptography
