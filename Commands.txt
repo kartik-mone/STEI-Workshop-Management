@@ -1,0 +1,15 @@
+1. Create a virtual Env. --> python -m venv env_name
+    Ex. - python -m venv STEI
+
+2. cd env_name  --> cd Scripts --> .\activate
+
+3. pip3 install fastapi
+
+4. pip3 install uvicorn
+
+5. setx PYTHONDONTWRITEBYTECODE 1  --> it can't create pycache file
+
+6. (STEI) C:\Users\Karti\Desktop\STEI WORKSHOP MANAGEMENT - FASTAPI> uvicorn main:app --reload
+
+
+5 & 6. set PYTHONDONTWRITEBYTECODE=1 && uvicorn main:app --reload

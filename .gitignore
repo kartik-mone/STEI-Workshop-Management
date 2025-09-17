@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.log
+
+# Virtual environment
+venv/
+ENV/
+.venv/
+SteiEnv/
+STEI/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Database / secrets
+*.db
+*.sqlite3
+Database.sql
+config.py
+
+# OS specific
+.DS_Store
+Thumbs.db
+"venv/" 
+"__pycache__/" 
+"*.pyc" 
+"config.py" 
+"Database.sql" 
