@@ -9,7 +9,6 @@ pip install uvicorn
 
 setx PYTHONDONTWRITEBYTECODE 1  --> it can't create pycache file
 
-(STEI) C:\Users\Karti\Desktop\STEI WORKSHOP MANAGEMENT - FASTAPI> >python -m uvicorn main:app --reload
+python -m uvicorn main:app --reload
 
-
-set PYTHONDONTWRITEBYTECODE=1 && u>python -m uvicorn main:app --reload
+set PYTHONDONTWRITEBYTECODE=1 && python -m uvicorn main:app --reload

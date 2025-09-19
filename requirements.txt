@@ -6,4 +6,3 @@ pymysql
 python-dotenv
 PyJWT
 cryptography
-flask
