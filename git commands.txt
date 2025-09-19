@@ -7,4 +7,3 @@ git commit -m "Updated commit"
 git push origin main
 
 if 'git push origin main' not works then use --> git push origin main --force
-
