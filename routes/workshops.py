@@ -1,12 +1,17 @@
 from fastapi import APIRouter, HTTPException, Request, Depends
 from db import get_db_connection
+from auth import require_admin  
 
 workshops_router = APIRouter(prefix="/workshops", tags=["Workshops"])
 
 
-# Add Workshop
+# ADMIN ROUTES
+
+# Add Workshop (Admin only)
 @workshops_router.post("/add")
-async def add_workshop(request: Request, conn=Depends(get_db_connection)):
+async def add_workshop(request: Request,
+                       conn=Depends(get_db_connection),
+                       user=Depends(require_admin)):   
     data = await request.json()
 
     if not data:
@@ -42,38 +47,15 @@ async def add_workshop(request: Request, conn=Depends(get_db_connection)):
     conn.commit()
     cursor.close()
 
-    return {"message": "Workshop added successfully"}
+    return {"message": f"Workshop added successfully by Admin {user['admin_id']}"}
 
 
-# Get all workshops
-@workshops_router.get("/")
-async def get_workshops(conn=Depends(get_db_connection)):
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM workshops")
-    result = cursor.fetchall()
-    cursor.close()
-
-    if not result:
-        return {"message": "No workshops found"}
-    return result
-
-
-# Get specific workshop
-@workshops_router.get("/{workshop_id}")
-async def get_workshop(workshop_id: int, conn=Depends(get_db_connection)):
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM workshops WHERE workshop_id = %s", (workshop_id,))
-    result = cursor.fetchone()
-    cursor.close()
-
-    if not result:
-        raise HTTPException(status_code=404, detail="Workshop not found")
-    return result
-
-
-# Update workshop
-@workshops_router.put("/{workshop_id}")
-async def update_workshop(workshop_id: int, request: Request, conn=Depends(get_db_connection)):
+# Update workshop (Admin only)
+@workshops_router.put("/update/{workshop_id}")
+async def update_workshop(workshop_id: int,
+                          request: Request,
+                          conn=Depends(get_db_connection),
+                          user=Depends(require_admin)):
     data = await request.json()
 
     if not data:
@@ -101,15 +83,46 @@ async def update_workshop(workshop_id: int, request: Request, conn=Depends(get_d
     conn.commit()
     cursor.close()
 
-    return {"message": "Workshop updated successfully"}
+    return {"message": f"Workshop updated successfully by Admin {user['admin_id']}"}
 
 
-# Delete workshop
-@workshops_router.delete("/{workshop_id}")
-async def delete_workshop(workshop_id: int, conn=Depends(get_db_connection)):
+# Delete workshop (Admin only)
+@workshops_router.delete("/delete/{workshop_id}")
+async def delete_workshop(workshop_id: int,
+                          conn=Depends(get_db_connection),
+                          user=Depends(require_admin)):
     cursor = conn.cursor()
     cursor.execute("DELETE FROM workshops WHERE workshop_id = %s", (workshop_id,))
     conn.commit()
     cursor.close()
 
-    return {"message": "Workshop deleted successfully"}
+    return {"message": f"Workshop deleted successfully by Admin {user['admin_id']}"}
+
+
+# PUBLIC ROUTES
+
+# Get all workshops (Public)
+@workshops_router.get("/")
+async def get_workshops(conn=Depends(get_db_connection)):
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM workshops")
+    result = cursor.fetchall()
+    cursor.close()
+
+    if not result:
+        return {"message": "No workshops found"}
+    return result
+
+
+# Get specific workshop (Public)
+@workshops_router.get("/{workshop_id}")
+async def get_workshop(workshop_id: int,
+                       conn=Depends(get_db_connection)):
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM workshops WHERE workshop_id = %s", (workshop_id,))
+    result = cursor.fetchone()
+    cursor.close()
+
+    if not result:
+        raise HTTPException(status_code=404, detail="Workshop not found")
+    return result

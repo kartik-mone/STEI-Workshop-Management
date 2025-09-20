@@ -1,11 +1,16 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from typing import Optional
 from db import get_db_connection
+from auth import require_admin   # Protect with admin token
 
-students_router = APIRouter(prefix="/students", tags=["Students"])
+students_router_admin = APIRouter(
+    prefix="/students",
+    tags=["Students (Admin)"]
+)
 
-# Pydantic models
+
+# ---------------- Pydantic Models ----------------
 class StudentBase(BaseModel):
     first_name: str
     last_name: Optional[str] = None
@@ -16,6 +21,7 @@ class StudentBase(BaseModel):
     confirm_password: str
     email_consent: Optional[bool] = False
 
+
 class StudentUpdate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
@@ -24,36 +30,43 @@ class StudentUpdate(BaseModel):
     email_consent: Optional[bool] = None
 
 
-# Register student
-@students_router.post("/register")
-async def register_student(student: StudentBase, conn=Depends(get_db_connection)):
+# ---------------- ADMIN ROUTES ----------------
+
+# Register student (Admin only)
+@students_router_admin.post("/register")
+async def register_student(student: StudentBase,
+                           conn=Depends(get_db_connection),
+                           user=Depends(require_admin)):   # Admin required
     if student.password != student.confirm_password:
         raise HTTPException(status_code=400, detail="Password and Confirm Password do not match")
 
     try:
         with conn.cursor() as cursor:
-            query = """INSERT INTO students 
+            query = """
+                INSERT INTO students 
                 (first_name, last_name, email, phone, address, password, email_consent)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """
             cursor.execute(query, (
                 student.first_name,
                 student.last_name,
                 student.email,
                 student.phone,
                 student.address,
-                student.password,
+                student.password,         # ⚠️ should be hashed in real app
                 student.email_consent
             ))
             conn.commit()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    return {"message": "Student registered successfully"}
+    return {"message": f"Student registered successfully by Admin {user['admin_id']}"}
 
 
-# Get all students with workshop & batch info
-@students_router.get("/")
-async def get_students(conn=Depends(get_db_connection)):
+# Get all students with workshop & batch info (Admin only)
+@students_router_admin.get("/")
+async def get_students(conn=Depends(get_db_connection),
+                       user=Depends(require_admin)):
     query = """
         SELECT 
             s.student_id, s.first_name, s.last_name, s.email, s.phone, s.address,
@@ -76,9 +89,11 @@ async def get_students(conn=Depends(get_db_connection)):
     return students if students else {"message": "No students found"}
 
 
-# Get specific student by ID
-@students_router.get("/{student_id}")
-async def get_student(student_id: int, conn=Depends(get_db_connection)):
+# Get specific student by ID (Admin only)
+@students_router_admin.get("/{student_id}")
+async def get_student(student_id: int,
+                      conn=Depends(get_db_connection),
+                      user=Depends(require_admin)):
     query = """
         SELECT 
             s.student_id, s.first_name, s.last_name, s.email, s.phone, s.address,
@@ -105,9 +120,12 @@ async def get_student(student_id: int, conn=Depends(get_db_connection)):
     return student
 
 
-# Update student dynamically
-@students_router.put("/{student_id}")
-async def update_student(student_id: int, student: StudentUpdate, conn=Depends(get_db_connection)):
+# Update student dynamically (Admin only)
+@students_router_admin.put("/update/{student_id}")
+async def update_student(student_id: int,
+                         student: StudentUpdate,
+                         conn=Depends(get_db_connection),
+                         user=Depends(require_admin)):
     data = student.dict(exclude_unset=True)
     if not data:
         raise HTTPException(status_code=400, detail="No valid fields provided to update")
@@ -131,12 +149,14 @@ async def update_student(student_id: int, student: StudentUpdate, conn=Depends(g
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    return {"message": "Student updated successfully"}
+    return {"message": f"Student {student_id} updated successfully by Admin {user['admin_id']}"}
 
 
-# Delete student
-@students_router.delete("/{student_id}")
-async def delete_student(student_id: int, conn=Depends(get_db_connection)):
+# Delete student (Admin only)
+@students_router_admin.delete("/delete/{student_id}")
+async def delete_student(student_id: int,
+                         conn=Depends(get_db_connection),
+                         user=Depends(require_admin)):
     try:
         with conn.cursor() as cursor:
             cursor.execute("DELETE FROM students WHERE student_id=%s", (student_id,))
@@ -144,4 +164,4 @@ async def delete_student(student_id: int, conn=Depends(get_db_connection)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    return {"message": "Student deleted successfully"}
+    return {"message": f"Student {student_id} deleted successfully by Admin {user['admin_id']}"}
