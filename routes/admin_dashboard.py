@@ -79,11 +79,11 @@ def admin_dashboard(user=Depends(require_admin), conn=Depends(get_db_connection)
         dashboard_data["upcoming_batches"] = [
             {
                 # "batch_id": b["batch_id"],
-                "batch_name": b["batch_name"],
-                "workshop": b["workshop_name"],
-                "start_date": str(b["start_date"]),
-                "students": b["students"],
-                "status": b["status"]
+                "Batch Name": b["batch_name"],
+                "Workshop": b["workshop_name"],
+                "Start Date": str(b["start_date"]),
+                "Students": b["students"],
+                "Status": b["status"]
             }
             for b in upcoming_batches
         ]
