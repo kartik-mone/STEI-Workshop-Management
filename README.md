@@ -3,6 +3,7 @@
 A Workshop Management System built with **FastAPI**, designed to manage workshops, batches, students, categories, quotes, and authentication for both **Admins** and **Students**.
 This project provides a structured backend API with **JWT authentication** for secure role-based access.
 
+---
 
 ## Features
 
@@ -42,7 +43,7 @@ This project provides a structured backend API with **JWT authentication** for s
 
   * MySQL database integration (`db.py` and `Database.sql`)
 
-
+---
 
 ## Project Structure
 
@@ -78,7 +79,7 @@ STEI WORKSHOP MANAGEMENT - FASTAPI
 │── README.md
 ```
 
-
+---
 
 ## Installation
 
@@ -104,6 +105,7 @@ source venv/bin/activate  # On Linux/Mac
 pip install -r requirements.txt
 ```
 
+---
 
 ## Database Setup
 
@@ -136,6 +138,7 @@ API available at:
 `http://127.0.0.1:8000`
 Swagger UI: `http://127.0.0.1:8000/docs`
 
+---
 
 ## API Endpoints
 
@@ -185,7 +188,7 @@ Swagger UI: `http://127.0.0.1:8000/docs`
 * `PUT /quotes/{id}` → Update quote (admin only)
 * `DELETE /quotes/{id}` → Delete quote (admin only)
 
-
+---
 
 ## Tech Stack
 
