@@ -16,6 +16,7 @@ class AdminLoginRequest(BaseModel):
     email: str
     password: str
 
+
 # Student Login
 @router.post("/student/login")
 def student_login(data: LoginRequest, conn=Depends(get_db_connection)):

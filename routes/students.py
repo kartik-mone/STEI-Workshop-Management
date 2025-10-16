@@ -1,13 +1,10 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, Literal
 from db import get_db_connection
 from auth import require_admin   # Protect with admin token
 
-students_router_admin = APIRouter(
-    prefix="/students",
-    tags=["Students (Admin)"]
-)
+students_router_admin = APIRouter( prefix="/students", tags=["Students (Admin)"])
 
 
 # ---------------- Pydantic Models ----------------
@@ -20,6 +17,9 @@ class StudentBase(BaseModel):
     password: str
     confirm_password: str
     email_consent: Optional[bool] = False
+    profession: Literal['student', 'employee', 'other'] = 'student'
+    designation: Optional[str] = None
+    gender: Literal['male', 'female', 'other'] = 'male'
 
 
 class StudentUpdate(BaseModel):
@@ -28,6 +28,9 @@ class StudentUpdate(BaseModel):
     phone: Optional[str] = None
     address: Optional[str] = None
     email_consent: Optional[bool] = None
+    profession: Optional[Literal['student', 'employee', 'other']] = None
+    designation: Optional[str] = None
+    gender: Optional[Literal['male', 'female', 'other']] = None
 
 
 # ---------------- ADMIN ROUTES ----------------
@@ -44,8 +47,8 @@ async def register_student(student: StudentBase,
         with conn.cursor() as cursor:
             query = """
                 INSERT INTO students 
-                (first_name, last_name, email, phone, address, password, email_consent)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                (first_name, last_name, email, phone, address, password, email_consent, profession, designation, gender)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor.execute(query, (
                 student.first_name,
@@ -53,8 +56,11 @@ async def register_student(student: StudentBase,
                 student.email,
                 student.phone,
                 student.address,
-                student.password,         # ⚠️ should be hashed in real app
-                student.email_consent
+                student.password,        
+                student.email_consent,
+                student.profession,
+                student.designation,
+                student.gender
             ))
             conn.commit()
     except Exception as e:
@@ -70,7 +76,8 @@ async def get_students(conn=Depends(get_db_connection),
     query = """
         SELECT 
             s.student_id, s.first_name, s.last_name, s.email, s.phone, s.address,
-            s.password, s.email_consent, s.created_at, s.updated_at,
+            s.password, s.email_consent, s.profession, s.designation, s.gender,
+            s.created_at, s.updated_at,
             se.enrollment_id, se.status AS enrollment_status, se.enrollment_date,
             b.id AS batch_id, b.batch_name, b.status AS batch_status,
             w.workshop_id, w.name AS workshop_name
@@ -97,7 +104,8 @@ async def get_student(student_id: int,
     query = """
         SELECT 
             s.student_id, s.first_name, s.last_name, s.email, s.phone, s.address,
-            s.password, s.email_consent, s.created_at, s.updated_at,
+            s.password, s.email_consent, s.profession, s.designation, s.gender,
+            s.created_at, s.updated_at,
             se.enrollment_id, se.status AS enrollment_status, se.enrollment_date,
             b.id AS batch_id, b.batch_name, b.status AS batch_status,
             w.workshop_id, w.name AS workshop_name
@@ -130,7 +138,8 @@ async def update_student(student_id: int,
     if not data:
         raise HTTPException(status_code=400, detail="No valid fields provided to update")
 
-    allowed_fields = ["first_name", "last_name", "phone", "address", "email_consent"]
+    allowed_fields = ["first_name", "last_name", "phone", "address",
+                      "email_consent", "profession", "designation", "gender"]
     fields = []
     values = []
 

@@ -38,6 +38,7 @@ CREATE TABLE workshops (
         ON DELETE CASCADE
 );
 
+
 CREATE TABLE batches (
     id INT AUTO_INCREMENT PRIMARY KEY,
     workshop_id INT NOT NULL,              -- linked to workshops table
@@ -119,3 +120,8 @@ CREATE TABLE blacklisted_tokens (
     token TEXT NOT NULL,
     blacklisted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE students
+ADD COLUMN profession ENUM('student', 'employee', 'other') DEFAULT 'student' AFTER email_consent,
+ADD COLUMN designation VARCHAR(100) AFTER profession,
+ADD COLUMN gender ENUM('male', 'female', 'other') AFTER designation;

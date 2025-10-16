@@ -26,7 +26,7 @@ async def update_student_profile(
     if not update_data:
         raise HTTPException(status_code=400, detail="No valid fields provided to update")
 
-    allowed_fields = ["first_name", "last_name", "phone", "address", "email"]
+    allowed_fields = ["first_name", "last_name", "phone", "address", "email", "profession", "designation", "gender"]
     fields = []
     values = []
 
@@ -48,7 +48,8 @@ async def update_student_profile(
             conn.commit()
 
             # Fetch updated profile
-            cursor.execute("SELECT student_id, first_name, last_name, phone, address, email FROM students WHERE student_id=%s", (student_id,))
+            cursor.execute("SELECT student_id, first_name, last_name, phone, address, " 
+                            "email, profession, designation, gender FROM students WHERE student_id=%s", (student_id,))
             updated_student = cursor.fetchone()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
