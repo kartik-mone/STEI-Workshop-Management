@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request, Depends
-from db import get_db_connection
-from auth import require_admin  
+from database.db import get_db_connection
+from auth.jwt.jwt_auth import require_admin  
 
 workshops_router = APIRouter(prefix="/workshops", tags=["Workshops"])
 

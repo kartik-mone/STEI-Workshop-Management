@@ -1,58 +1,67 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, EmailStr
-from db import get_db_connection
-from auth import require_student
+from typing import Optional, Literal
+from database.db import get_db_connection
+from auth.jwt.jwt_auth import require_student
 
 update_student_router = APIRouter(prefix="/auth", tags=["Auth"])
 
-# Request model for student update
+
+# -------------------------
+# Update request model
+# -------------------------
 class StudentUpdate(BaseModel):
-    first_name: str | None = None
-    last_name: str | None = None
-    phone: str | None = None
-    address: str | None = None
-    email: EmailStr | None = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    email: Optional[EmailStr] = None
+    profession: Optional[Literal["student", "employee", "other"]] = None
+    designation: Optional[str] = None
+    gender: Optional[Literal["male", "female", "other"]] = None
 
-# Update student profile
+
+# -------------------------
+# Update endpoint
+# -------------------------
 @update_student_router.put("/student/update")
-async def update_student_profile(
-    data: StudentUpdate,
-    user=Depends(require_student),
-    conn=Depends(get_db_connection)
+def update_student_profile(
+    update_data: StudentUpdate,
+    student=Depends(require_student),
+    conn=Depends(get_db_connection),
 ):
-    student_id = user["student_id"]
+    student_id = student["student_id"]
 
-    update_data = data.dict(exclude_unset=True)
-    if not update_data:
+    # Filter only provided (non-null) fields
+    data = update_data.dict(exclude_unset=True)
+
+    if not data:
         raise HTTPException(status_code=400, detail="No valid fields provided to update")
 
-    allowed_fields = ["first_name", "last_name", "phone", "address", "email", "profession", "designation", "gender"]
-    fields = []
-    values = []
-
-    for key in allowed_fields:
-        if key in update_data:
-            fields.append(f"{key}=%s")
-            values.append(update_data[key])
-
-    if not fields:
-        raise HTTPException(status_code=400, detail="No allowed fields provided")
-
-    values.append(student_id)  # for WHERE clause
-
-    query = f"UPDATE students SET {', '.join(fields)} WHERE student_id=%s"
-
-    try:
+    # Optional: prevent email change if you don’t allow it
+    if "email" in data:
         with conn.cursor() as cursor:
-            cursor.execute(query, tuple(values))
-            conn.commit()
+            cursor.execute("SELECT student_id FROM students WHERE email = %s", (data["email"],))
+            existing = cursor.fetchone()
+            if existing and existing[0] != student_id:
+                raise HTTPException(status_code=400, detail="Email already in use")
 
-            # Fetch updated profile
-            cursor.execute("SELECT student_id, first_name, last_name, phone, address, " 
-                            "email, profession, designation, gender FROM students WHERE student_id=%s", (student_id,))
-            updated_student = cursor.fetchone()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    # Build SQL dynamically
+    set_parts = [f"{field}=%s" for field in data.keys()]
+    values = list(data.values())
+    values.append(student_id)
+
+    query = f"UPDATE students SET {', '.join(set_parts)} WHERE student_id=%s"
+
+    with conn.cursor(dictionary=True) as cursor:
+        cursor.execute(query, tuple(values))
+        conn.commit()
+
+        cursor.execute("SELECT * FROM students WHERE student_id=%s", (student_id,))
+        updated_student = cursor.fetchone()
+
+    if not updated_student:
+        raise HTTPException(status_code=404, detail="Student not found after update")
 
     return {
         "message": "Profile updated successfully",

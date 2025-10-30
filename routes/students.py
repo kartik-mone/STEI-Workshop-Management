@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
 from typing import Optional, Literal
-from db import get_db_connection
-from auth import require_admin   # Protect with admin token
+from database.db import get_db_connection
+from auth.jwt.jwt_auth import require_admin   # Protect with admin token
 
 students_router_admin = APIRouter( prefix="/students", tags=["Students (Admin)"])
 

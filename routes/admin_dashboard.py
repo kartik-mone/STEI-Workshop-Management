@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from auth import require_admin
-from db import get_db_connection
+from auth.jwt.jwt_auth import require_admin
+from database.db import get_db_connection
 
 admin_dashboard_router = APIRouter(
     prefix="/admin-dashboard",

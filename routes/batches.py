@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional
-from db import get_db_connection
-from auth import require_admin
+from database.db import get_db_connection
+from auth.jwt.jwt_auth import require_admin
 
 batches_router = APIRouter(prefix="/batches", tags=["Batches"])
 

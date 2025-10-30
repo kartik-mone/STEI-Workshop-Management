@@ -14,3 +14,4 @@ def get_db_connection():
         yield conn
     finally:
         conn.close()
+

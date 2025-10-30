@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
-from db import get_db_connection
-from auth import require_admin   # Only admins can modify categories
+from database.db import get_db_connection
+from auth.jwt.jwt_auth import require_admin   # Only admins can modify categories
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
 
