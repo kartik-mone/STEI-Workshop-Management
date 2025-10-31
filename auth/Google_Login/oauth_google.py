@@ -1,4 +1,4 @@
-# auth/oauth_google.py
+
 import os
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -9,7 +9,7 @@ from auth.jwt.jwt_auth import create_access_token
 
 router = APIRouter(prefix="/auth", tags=["Google"])
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")  # set this in your .env for production
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")  
 
 
 class GoogleLoginRequest(BaseModel):

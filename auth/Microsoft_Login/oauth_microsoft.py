@@ -31,7 +31,6 @@ def microsoft_login():
         f"&scope=openid%20profile%20email%20User.Read"
         f"&prompt=select_account"
     )
-    # For backend-only flow, redirect the browser to the authorize URL
     return RedirectResponse(authorize_url)
 
 

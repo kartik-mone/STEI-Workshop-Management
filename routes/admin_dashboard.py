@@ -49,7 +49,7 @@ def admin_dashboard(user=Depends(require_admin), conn=Depends(get_db_connection)
             SELECT name, category_name, duration_days, start_date, status
             FROM workshops
             ORDER BY created_at DESC
-            LIMIT 5
+            LIMIT 3
         """)
         recent_workshops = cursor.fetchall()
         
@@ -66,14 +66,12 @@ def admin_dashboard(user=Depends(require_admin), conn=Depends(get_db_connection)
 
         # Upcoming Batches (future start_date)
         cursor.execute("""
-            SELECT b.batch_name, b.start_date, b.status,
-                   w.name AS workshop_name,
-                   (SELECT COUNT(*) FROM student_enrollments se WHERE se.batch_id = b.id) AS students
+            SELECT b.batch_name, b.start_date, b.status, w.name AS workshop_name,
+            (SELECT COUNT(*) FROM student_enrollments se WHERE se.batch_id = b.id) AS students
             FROM batches b
             JOIN workshops w ON b.workshop_id = w.workshop_id
-            WHERE b.start_date >= CURRENT_DATE
-            ORDER BY b.start_date ASC
-            LIMIT 5
+            ORDER BY b.id DESC
+            LIMIT 3
         """)
         upcoming_batches = cursor.fetchall()
         dashboard_data["upcoming_batches"] = [
