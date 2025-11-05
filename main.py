@@ -1,20 +1,21 @@
 from fastapi import FastAPI
 
-# AUTH ROUTES 
+# AUTH Admin 
 
-# ADMIN ROUTES
-from routes.categories import router as categories_router
-from routes.workshops import workshops_router
-from routes.batches import batches_router
-from routes.students import students_router_admin
-from routes.quote import quotes_router
-from routes.admin_dashboard import admin_dashboard_router
+# ADMIN Admin
+from Admin.categories import router as categories_router
+from Admin.workshops import workshops_router
+from Admin.batches import batches_router
+from Admin.students import students_router_admin
+from Admin.quote import quotes_router
+from Admin.admin_dashboard import admin_dashboard_router
 
-# STUDENT ROUTES
+# STUDENT Admin
 from Students.enrollments import enrollments_router
 from Students.student import students_router
 from Students.student_dashboard import student_dashboard_router
 from Students.student_update import update_student_router
+from Students.clarity_call import clarity_call_router
 
 from auth.Login_Logout.login import router as login_router
 from auth.Login_Logout.logout import router as logout_router
@@ -42,6 +43,7 @@ app.include_router(enrollments_router)
 app.include_router(students_router)
 app.include_router(student_dashboard_router)
 app.include_router(update_student_router)
+app.include_router(clarity_call_router)
 
 app.include_router(login_router) # /login/student and /login/admin
 app.include_router(logout_router) # /logout/student and /logout/admin

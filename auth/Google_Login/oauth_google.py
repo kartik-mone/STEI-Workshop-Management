@@ -13,7 +13,7 @@ GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 
 
 class GoogleLoginRequest(BaseModel):
-    id_token: str  # Google ID token obtained from client or Postman
+    id_token: str  
 
 
 @router.post("/google/login")

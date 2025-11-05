@@ -99,4 +99,4 @@ def verify_otp(payload: VerifyOtpRequest, conn=Depends(get_db_connection)):
     del otp_store[identifier]
 
     token = create_access_token({"student_id": student["student_id"], "role": "student"})
-    return {"message": "OTP verified successfully", "token": token}
+    return {"message": "OTP verified successfully and Student Login Successful..!", "token": token}

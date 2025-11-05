@@ -73,95 +73,57 @@ def get_student_dashboard(student=Depends(require_student), conn=Depends(get_db_
 
 
 
-# # -----------------------------
-# #  CLARITY CALL STATUS
-# # -----------------------------
-# @student_dashboard_router.get("/clarity_call_status")
-# def get_clarity_call_status(student=Depends(require_student), conn=Depends(get_db_connection)):
-#     if not student:
-#         raise HTTPException(status_code=401, detail="Unauthorized access")
+#  Profile Completion Status
+# -----------------------------
+@student_dashboard_router.get("/profile_completion")
+def get_profile_completion(student=Depends(require_student), conn=Depends(get_db_connection)):
+    if not student:
+        raise HTTPException(status_code=401, detail="Unauthorized access")
 
-#     student_id = student["student_id"]
+    student_id = student["student_id"]
 
-#     query = """
-#         SELECT call_status, scheduled_date, mentor_name
-#         FROM clarity_calls
-#         WHERE student_id = %s
-#         ORDER BY scheduled_date DESC
-#         LIMIT 1
-#     """
+    query = """
+        SELECT first_name, last_name, email, phone, address, profession, designation, gender
+        FROM students WHERE student_id = %s
+    """
 
-#     with conn.cursor(dictionary=True) as cursor:
-#         cursor.execute(query, (student_id,))
-#         record = cursor.fetchone()
+    with conn.cursor() as cursor:
+        cursor.execute(query, (student_id,))
+        data = cursor.fetchone()
 
-#     if not record:
-#         return {"clarity_call_status": "Not Scheduled"}
+    if not data:
+        raise HTTPException(status_code=404, detail="Student not found")
 
-#     return {
-#         "clarity_call_status": record["call_status"],
-#         "scheduled_date": str(record["scheduled_date"]) if record["scheduled_date"] else None,
-#         "mentor_name": record["mentor_name"]
-#     }
+    required_fields = ["first_name", "last_name", "email", "phone", "address", "profession", "designation", "gender"]
+    filled_fields = [f for f in required_fields if data.get(f)]
+    missing_fields = [f for f in required_fields if not data.get(f)]
 
+    completion_percent = round((len(filled_fields) / len(required_fields)) * 100, 2)
 
-# # -----------------------------
-# #  PROFILE COMPLETION
-# # -----------------------------
-# @student_dashboard_router.get("/profile_completion")
-# def get_profile_completion(student=Depends(require_student), conn=Depends(get_db_connection)):
-#     if not student:
-#         raise HTTPException(status_code=401, detail="Unauthorized access")
-
-#     student_id = student["student_id"]
-
-#     query = """
-#         SELECT first_name, last_name, email, phone, address, profession, designation, gender
-#         FROM students WHERE student_id = %s
-#     """
-
-#     with conn.cursor(dictionary=True) as cursor:
-#         cursor.execute(query, (student_id,))
-#         data = cursor.fetchone()
-
-#     if not data:
-#         raise HTTPException(status_code=404, detail="Student not found")
-
-#     required_fields = ["first_name", "last_name", "email", "phone", "address", "profession", "designation", "gender"]
-#     filled_fields = [f for f in required_fields if data.get(f)]
-#     missing_fields = [f for f in required_fields if not data.get(f)]
-
-#     completion_percent = round((len(filled_fields) / len(required_fields)) * 100, 2)
-
-#     return {
-#         "profile_completion": f"{completion_percent}%",
-#         "filled_fields": filled_fields,
-#         "missing_fields": missing_fields
-#     }
+    return {
+        "profile_completion": f"{completion_percent}%",
+        "filled_fields": filled_fields,
+        "missing_fields": missing_fields
+    }
 
 
-# # -----------------------------
-# #  CLEANUP TEMP DATA
-# # -----------------------------
-# @student_dashboard_router.delete("/cleanup_inprogress_data")
-# def cleanup_inprogress_data(student=Depends(require_student), conn=Depends(get_db_connection)):
-#     if not student:
-#         raise HTTPException(status_code=401, detail="Unauthorized access")
+#  Clean In Process Assignment 
+# -----------------------------
+@student_dashboard_router.delete("/cleanup_Assignment")
+def cleanup_inprogress_data(student=Depends(require_student), conn=Depends(get_db_connection)):
+    if not student:
+        raise HTTPException(status_code=401, detail="Unauthorized access")
 
-#     student_id = student["student_id"]
+    student_id = student["student_id"]
 
-#     with conn.cursor() as cursor:
-#         # Remove in-progress assignments
-#         cursor.execute("""
-#             DELETE FROM student_assignments 
-#             WHERE student_id = %s AND status IN ('In Progress', 'Draft')
-#         """, (student_id,))
+    with conn.cursor() as cursor:
+        # Remove in-progress assignments
+        cursor.execute("""
+            DELETE FROM student_assignments 
+            WHERE student_id = %s AND status IN ('In Progress')
+        """, (student_id,))
 
-#         # Remove old in-progress progress data
-#         cursor.execute("""
-#             DELETE FROM student_progress 
-#             WHERE student_id = %s AND progress_status = 'In Progress'
-#         """, (student_id,))
+    conn.commit()
+    return {"message": f"Removed all in-progress assignment data successfully from {student['first_name']}."}
 
-#     conn.commit()
-#     return {"message": "Removed all in-progress and assignment data successfully."}
+

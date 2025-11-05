@@ -4,7 +4,8 @@ from typing import Optional, Literal
 from database.db import get_db_connection
 from auth.jwt.jwt_auth import require_admin   # Protect with admin token
 
-students_router_admin = APIRouter( prefix="/students", tags=["Students (Admin)"])
+
+students_router_admin = APIRouter( prefix="/admin/students", tags=["Students (Admin)"])
 
 
 # ---------------- Pydantic Models ----------------
@@ -174,3 +175,103 @@ async def delete_student(student_id: int,
         raise HTTPException(status_code=500, detail=str(e))
 
     return {"message": f"Student {student_id} deleted successfully by Admin {user['admin_id']}"}
+
+
+
+#  POST → Schedule a Clarity Call
+# -----------------------------------------
+@students_router_admin.post("/create-clarity-call")
+def create_clarity_call(data: dict, admin=Depends(require_admin), conn=Depends(get_db_connection)):
+    if not admin:
+        raise HTTPException(status_code=401, detail="Unauthorized access")
+
+    required_fields = ["student_id", "mentor_name", "call_status", "scheduled_date"]
+    for field in required_fields:
+        if field not in data:
+            raise HTTPException(status_code=400, detail=f"Missing field: {field}")
+
+    student_id = data["student_id"]
+    mentor_name = data["mentor_name"]
+    call_status = data["call_status"]
+    scheduled_date = data["scheduled_date"]
+    note = data.get("note")
+
+    # Check student exists
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT student_id, first_name, last_name FROM students WHERE student_id=%s", (student_id,))
+        student = cursor.fetchone()
+
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+
+    # Insert clarity call
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            INSERT INTO clarity_calls (student_id, mentor_name, call_status, scheduled_date, notes)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (student_id, mentor_name, call_status, scheduled_date, note))
+
+        conn.commit()
+
+    return {
+        "message": "Clarity call scheduled",
+        "student": {
+            "id": student["student_id"],
+            "name": f"{student['first_name']} {student['last_name']}"
+        },
+        "call": {
+            "status": call_status,
+            "scheduled_date": scheduled_date,
+            "mentor_name": mentor_name
+        }
+    }
+
+
+
+#  POST → Create Student Assignments
+# -----------------------------------------
+
+@students_router_admin.post("/create-assignments")
+def create_assignment(data: dict, admin=Depends(require_admin), conn=Depends(get_db_connection)):
+    
+    if not admin:
+        raise HTTPException(status_code=401, detail="Unauthorized access")
+
+    required_fields = ["student_id", "assignment_title", "description"]
+    for field in required_fields:
+        if field not in data:
+            raise HTTPException(status_code=400, detail=f"Missing field: {field}")
+
+    student_id = data["student_id"]
+    title = data["assignment_title"]
+    description = data["description"]
+    status = data.get("status", "Assigned")
+
+    # Check student exists
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT student_id, first_name, last_name FROM students WHERE student_id=%s", (student_id,))
+        student = cursor.fetchone()
+
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+
+    # Insert assignment
+    with conn.cursor() as cursor:
+        cursor.execute("""
+            INSERT INTO student_assignments (student_id, assignment_title, description, status)
+            VALUES (%s, %s, %s, %s)
+        """, (student_id, title, description, status))
+
+        conn.commit()
+
+    return {
+        "message": "Assignment created successfully",
+        "student": {
+            "id": student["student_id"],
+            "name": f"{student['first_name']} {student['last_name']}"
+        },
+        "assignment": {
+            "title": title,
+            "status": status
+        }
+    }
