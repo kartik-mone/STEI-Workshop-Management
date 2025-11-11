@@ -6,3 +6,6 @@ pymysql
 python-dotenv
 PyJWT
 cryptography
+python-jose
+passlib
+requests

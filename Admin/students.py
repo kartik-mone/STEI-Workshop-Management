@@ -2,13 +2,15 @@ from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr
 from typing import Optional, Literal
 from database.db import get_db_connection
-from auth.jwt.jwt_auth import require_admin   # Protect with admin token
+from auth.jwt.jwt_auth import require_admin   
 
 
 students_router_admin = APIRouter( prefix="/admin/students", tags=["Students (Admin)"])
 
 
-# ---------------- Pydantic Models ----------------
+# Pydantic Models 
+# -----------------------------------------
+
 class StudentBase(BaseModel):
     first_name: str
     last_name: Optional[str] = None
@@ -34,9 +36,7 @@ class StudentUpdate(BaseModel):
     gender: Optional[Literal['male', 'female', 'other']] = None
 
 
-# ---------------- ADMIN ROUTES ----------------
-
-# Register student (Admin only)
+# Register student 
 @students_router_admin.post("/register")
 async def register_student(student: StudentBase,
                            conn=Depends(get_db_connection),
@@ -70,7 +70,8 @@ async def register_student(student: StudentBase,
     return {"message": f"Student registered successfully by Admin {user['admin_id']}"}
 
 
-# Get all students with workshop & batch info (Admin only)
+# GET → Get all students with workshop & batch info 
+# -----------------------------------------
 @students_router_admin.get("/")
 async def get_students(conn=Depends(get_db_connection),
                        user=Depends(require_admin)):
@@ -97,7 +98,9 @@ async def get_students(conn=Depends(get_db_connection),
     return students if students else {"message": "No students found"}
 
 
-# Get specific student by ID (Admin only)
+# GET → Get specific student by ID 
+# -----------------------------------------
+
 @students_router_admin.get("/{student_id}")
 async def get_student(student_id: int,
                       conn=Depends(get_db_connection),
@@ -105,7 +108,7 @@ async def get_student(student_id: int,
     query = """
         SELECT 
             s.student_id, s.first_name, s.last_name, s.email, s.phone, s.address,
-            s.password, s.email_consent, s.profession, s.designation, s.gender,
+            s.password, s.email_consent, s.profession, s.designation, s.gender, s.status,
             s.created_at, s.updated_at,
             se.enrollment_id, se.status AS enrollment_status, se.enrollment_date,
             b.id AS batch_id, b.batch_name, b.status AS batch_status,
@@ -129,7 +132,9 @@ async def get_student(student_id: int,
     return student
 
 
-# Update student dynamically (Admin only)
+# PUT → Update student dynamically 
+# -----------------------------------------
+
 @students_router_admin.put("/update/{student_id}")
 async def update_student(student_id: int,
                          student: StudentUpdate,
@@ -162,7 +167,9 @@ async def update_student(student_id: int,
     return {"message": f"Student {student_id} updated successfully by Admin {user['admin_id']}"}
 
 
-# Delete student (Admin only)
+# DELETE → Delete student
+# -------------------------
+
 @students_router_admin.delete("/delete/{student_id}")
 async def delete_student(student_id: int,
                          conn=Depends(get_db_connection),
@@ -178,60 +185,11 @@ async def delete_student(student_id: int,
 
 
 
-#  POST → Schedule a Clarity Call
-# -----------------------------------------
-@students_router_admin.post("/create-clarity-call")
-def create_clarity_call(data: dict, admin=Depends(require_admin), conn=Depends(get_db_connection)):
-    if not admin:
-        raise HTTPException(status_code=401, detail="Unauthorized access")
-
-    required_fields = ["student_id", "mentor_name", "call_status", "scheduled_date"]
-    for field in required_fields:
-        if field not in data:
-            raise HTTPException(status_code=400, detail=f"Missing field: {field}")
-
-    student_id = data["student_id"]
-    mentor_name = data["mentor_name"]
-    call_status = data["call_status"]
-    scheduled_date = data["scheduled_date"]
-    note = data.get("note")
-
-    # Check student exists
-    with conn.cursor() as cursor:
-        cursor.execute("SELECT student_id, first_name, last_name FROM students WHERE student_id=%s", (student_id,))
-        student = cursor.fetchone()
-
-    if not student:
-        raise HTTPException(status_code=404, detail="Student not found")
-
-    # Insert clarity call
-    with conn.cursor() as cursor:
-        cursor.execute("""
-            INSERT INTO clarity_calls (student_id, mentor_name, call_status, scheduled_date, notes)
-            VALUES (%s, %s, %s, %s, %s)
-        """, (student_id, mentor_name, call_status, scheduled_date, note))
-
-        conn.commit()
-
-    return {
-        "message": "Clarity call scheduled",
-        "student": {
-            "id": student["student_id"],
-            "name": f"{student['first_name']} {student['last_name']}"
-        },
-        "call": {
-            "status": call_status,
-            "scheduled_date": scheduled_date,
-            "mentor_name": mentor_name
-        }
-    }
-
-
 
 #  POST → Create Student Assignments
-# -----------------------------------------
+# ----------------------------------
 
-@students_router_admin.post("/create-assignments")
+@students_router_admin.post("/create_assignments")
 def create_assignment(data: dict, admin=Depends(require_admin), conn=Depends(get_db_connection)):
     
     if not admin:
@@ -275,3 +233,31 @@ def create_assignment(data: dict, admin=Depends(require_admin), conn=Depends(get
             "status": status
         }
     }
+
+
+
+
+# DELETE → Remove incomplete student
+# -----------------------------------------
+@students_router_admin.delete("/delete_incomplete/{student_id}")
+def delete_incomplete_student(
+    student_id: int,
+    admin=Depends(require_admin),
+    conn=Depends(get_db_connection)
+):
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "DELETE FROM students WHERE student_id=%s AND profile_completed=0",
+            (student_id,)
+        )
+        affected = cursor.rowcount
+        conn.commit()
+
+    if affected == 0:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Student {student_id} not found or profile is completed"
+        )
+
+    return {"message": f"Incomplete profile student {student_id} deleted successfully"}
+

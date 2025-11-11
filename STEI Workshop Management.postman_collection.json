@@ -1,0 +1,2011 @@
+{
+	"info": {
+		"_postman_id": "adbc5f71-79f8-41d8-8aac-74d8cd9f1867",
+		"name": "STEI Workshop Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41681189"
+	},
+	"item": [
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "/auth/student/login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "// {\r\n//     \"phone\": \"9090909090\",\r\n//     \"password\": \"NehaKapoor#2025\"\r\n// }\r\n\r\n\r\n{\r\n    \"phone\": \"9988776655\",\r\n    \"password\": \"Vikas@Work2025\"\r\n}\r\n\r\n\r\n// {\r\n//     \"phone\": \"8080395823\",\r\n//     \"password\": \"Mohit@123\"\r\n// }\r\n\r\n\r\n// {\r\n//     \"phone\": \"9765123400\",\r\n//     \"password\": \"PriyaSecure123!\"\r\n// }\r\n\r\n\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/student/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"student",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/student/logout",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoyOSwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIzNjY3MzB9.aNnIbnIshG_uTnWZWWqWWak1D4AHMgN8134RcE1NG_Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"phone\":\"9322955795\",\r\n    \"password\": \"StrongPass123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/student/logout",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"student",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/student/send_otp",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"identifier\":\"9812345678\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/student/send_otp",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"student",
+										"send_otp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/student/verify_otp",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"identifier\": \"kartikmone20@gmail.com\",\r\n  \"otp\": \"434989\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/student/verify_otp",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"student",
+										"verify_otp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/google/login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYxOTMzMDI0fQ._3fPL99YzyazIDyspBo2qTWKsVAC8W-mtB5t_Tz35Rw",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImI1ZTQ0MGFlOTQxZTk5ODFlZTJmYTEzNzZkNDJjNDZkNzMxZGVlM2YiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI5MTM3Nzg3MjU2NDcta2kxaTFrcm1xdmpyN2ZqMnA3N3Rwc2t1NmJzY2FhOTkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI5MTM3Nzg3MjU2NDcta2kxaTFrcm1xdmpyN2ZqMnA3N3Rwc2t1NmJzY2FhOTkuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDEwMjcxOTY5OTE2MjM4NTc0ODUiLCJlbWFpbCI6ImthcnRpa21tb25lMTJAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJFTTVGZ04xOFExdjV3MVpSVENIeENBIiwibmFtZSI6IkthcnRpayBNb25lIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0s2SW1aRW9tcVBVLUlyc2M3OHF6VGUyeTFZNHFsekhpMk1vZXV3TXFFWUFPSnVnZGs9czk2LWMiLCJnaXZlbl9uYW1lIjoiS2FydGlrIiwiZmFtaWx5X25hbWUiOiJNb25lIiwiaWF0IjoxNzYyMTUyNDA3LCJleHAiOjE3NjIxNTYwMDd9.jehnYSpVeXsrTgpcpY-8hN0LMgn5PeIyRplvq0uvy_Msl4qrfy-cPOYVei4CUdiANSu1R6FhLxYFyipxP0IKWAl-XpybD4Flmd993nnUlSog0nDWAyS32_US8lxQ9d2O3IUfyQRk9BLTN81hZv6MXFl9mWymSbD08AlxF-tiq2kDn8eEqbxj0sXz-ChK3sYRoz7cGVh-v74rAR9yGyKKE1G_-SlxxFJv_SNRCbiyZhfV2EXl1zJCwILsfNdN2h3ZjcdujXQ_t-gP60Kl2-GM-Z_-NRMavpQRTwaOXY5LdgzkGAdD7B7BsoCQNWR79Meq7B3rCSdguNlkZqeHvWiYgg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/google/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"google",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Enrollment",
+					"item": [
+						{
+							"name": "/enrollment/enroll/{workshop_id}/{batch_id}",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoyLCJyb2xlIjoic3R1ZGVudCIsImV4cCI6MTc1ODM2MDUwNn0.aICo1ABJC6wqUVbOcTBE1DiswqavG8xv0JfzpGSXg2c",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/enrollments/enroll/1/9",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"enrollments",
+										"enroll",
+										"1",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/enrollments/my-enrollments",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoyLCJyb2xlIjoic3R1ZGVudCIsImV4cCI6MTc1ODM2MDUwNn0.aICo1ABJC6wqUVbOcTBE1DiswqavG8xv0JfzpGSXg2c",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/enrollments/my-enrollments",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"enrollments",
+										"my-enrollments"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"item": [
+						{
+							"name": "/auth/student/update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjozNCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjI1NDgxNjB9.2Li4WVOHwzLnzrF0xony8entllMGE9PXcvDDg3yiE-c",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"designation\": \"SDE 1\"\r\n   \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/student/update",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"student",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "/student/register",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"first_name\": \"Rohit\",\r\n  \"last_name\": \"Verma\",\r\n  \"email\": \"rohit.verma@example.com\",\r\n  \"phone\": \"9812345678\",\r\n  \"password\": \"Rohit@2025\",\r\n  \"confirm_password\": \"Rohit@2025\",\r\n  \"email_consent\": false,\r\n  \"profession\": \"employee\",\r\n  \"gender\": \"male\",\r\n  \"address\": \"Bangalore, Karnataka\",\r\n  \"profile_completed\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/register",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/student/completion",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoxMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIyNzk1Mzd9.WZBP_vlK8LJX7TdYIo_V51a43BWcFB_jxLoVzA2bEF0",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/completion",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"completion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/student/progress",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoxMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIyNzk1Mzd9.WZBP_vlK8LJX7TdYIo_V51a43BWcFB_jxLoVzA2bEF0",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/progress",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"progress"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/student/mark-complete",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoxMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIyNzk1Mzd9.WZBP_vlK8LJX7TdYIo_V51a43BWcFB_jxLoVzA2bEF0",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/mark-complete",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"mark-complete"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/student/profile",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoxMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIyNzk1Mzd9.WZBP_vlK8LJX7TdYIo_V51a43BWcFB_jxLoVzA2bEF0",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/student/profile",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"student",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Dashboard",
+					"item": [
+						{
+							"name": "/profile",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoyOSwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIzNjY3MzB9.aNnIbnIshG_uTnWZWWqWWak1D4AHMgN8134RcE1NG_Q",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/dashboard/profile",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"dashboard",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/profile_completion",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoxMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIyNzk1Mzd9.WZBP_vlK8LJX7TdYIo_V51a43BWcFB_jxLoVzA2bEF0",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/dashboard/profile_completion",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"dashboard",
+										"profile_completion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/cleanup_Assignment",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoxMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIyNzk1Mzd9.WZBP_vlK8LJX7TdYIo_V51a43BWcFB_jxLoVzA2bEF0",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/dashboard/cleanup_Assignment",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"dashboard",
+										"cleanup_Assignment"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Clarity_Call",
+					"item": [
+						{
+							"name": "/clarity_call_status",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoyOSwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIzNjU2NzZ9.qA2BXhlR_ZdlCHEtulAnKRzUkTPIWCp1T7htubTcViA",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/clarity_call/clarity_call_status",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"clarity_call",
+										"clarity_call_status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/pre_questions",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjozMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjI4ODUxMzl9.u9DhHb-aNjMBFB4qrQfnvmYcnVjDtCA-LvvX7flxvB4",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/clarity_call/pre_questions",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"clarity_call",
+										"pre_questions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/submit_precall_questionnaire",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjozMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjI4ODUxMzl9.u9DhHb-aNjMBFB4qrQfnvmYcnVjDtCA-LvvX7flxvB4",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"responses\": [\r\n    {\r\n      \"question_id\": 3,\r\n      \"answer\": \"B\"\r\n    },\r\n    {\r\n      \"question_id\": 7,\r\n      \"answer\": \"D\"\r\n    }\r\n  ]\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/clarity_call/submit_precall_questionnaire",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"clarity_call",
+										"submit_precall_questionnaire"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/precall_questionnaire_responses",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjozMCwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjI4ODUxMzl9.u9DhHb-aNjMBFB4qrQfnvmYcnVjDtCA-LvvX7flxvB4",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/clarity_call/precall_questionnaire_responses",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"clarity_call",
+										"precall_questionnaire_responses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/history",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoyOSwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjIzNjU2NzZ9.qA2BXhlR_ZdlCHEtulAnKRzUkTPIWCp1T7htubTcViA",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/student/clarity_call/history",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"student",
+										"clarity_call",
+										"history"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Resources",
+					"item": [
+						{
+							"name": "Resources",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoyOSwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjI1NTQ3Nzd9.regl7ZoEP-IaEB-04DelHfcytZtKSyo87QL0sY4NkOI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"designation\": \"SDE 1\"\r\n   \r\n}"
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/resources/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"resources",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Categories",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50X2lkIjoyOSwicm9sZSI6InN0dWRlbnQiLCJleHAiOjE3NjI1NTQ3Nzd9.regl7ZoEP-IaEB-04DelHfcytZtKSyo87QL0sY4NkOI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"designation\": \"SDE 1\"\r\n   \r\n}"
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/resources/categories",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"resources",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Routes",
+					"item": [
+						{
+							"name": "categories",
+							"item": [
+								{
+									"name": "Get All Categories",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzU4Mzg1MTk1fQ.CbvKYTHIuEgCYfInhGyrL-wPWi-rhutG2bvamHxDPJY",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://127.0.0.1:8000/categories/",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"categories",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add New Category",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"Artificial Intelligence\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/categories/add\\",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"categories",
+												"add",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Specific Category",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzU4Mzg1NDE0fQ.7fDY9foeDjVXWakzbreTACN8BINeLnpt1qw9jJR5-ZY",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://127.0.0.1:8000/categories/6",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"categories",
+												"6"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Category",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Cloud & DevOps\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/categories/7",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"categories",
+												"7"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Category",
+									"request": {
+										"method": "DELETE",
+										"header": []
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "workshop",
+							"item": [
+								{
+									"name": "Add New Workshop",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"category_id\": 7,\r\n    \"name\": \"Advanced Cloud Computing\",\r\n    \"description\": \"Deep dive into cloud architecture and DevOps practices.\",\r\n    \"duration_days\": 5,\r\n    \"minutes_per_session\": 60,\r\n    \"sessions_per_day\": 2,\r\n    \"capacity\": 30,\r\n    \"fee\": 5000,\r\n    \"instructor\": \"Anish\",\r\n    \"status\": \"Upcoming\",\r\n    \"workshop_image\": \"cloud_workshop.jpg\",\r\n    \"start_date\": \"2025-10-01\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/workshops/add",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"workshops",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Workshop Details",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzU4Mzg1NDE0fQ.7fDY9foeDjVXWakzbreTACN8BINeLnpt1qw9jJR5-ZY",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://127.0.0.1:8000/workshops/",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"workshops",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Specific Workshop Details",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzU4Mzg1NDE0fQ.7fDY9foeDjVXWakzbreTACN8BINeLnpt1qw9jJR5-ZY",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://127.0.0.1:8000/workshops/4",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"workshops",
+												"4"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Workshop Details",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n    \"status\": \"Active\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/workshops/5",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"workshops",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Specific Workshop",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/workshops/8",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"workshops",
+												"8"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Batches",
+							"item": [
+								{
+									"name": "Add New Batch",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"workshop_id\": 3,\r\n    \"batch_name\": \"Empowerment Batch A\",\r\n    \"instructor\": \"Anita Sharma\",\r\n    \"status\": \"Upcoming\",\r\n    \"start_date\": \"2025-10-01\",\r\n    \"start_time\": \"10:00:00\",\r\n    \"end_time\": \"12:00:00\",\r\n    \"location\": \"Room 101, Main Building\",\r\n    \"zoom_link\": \"https://zoom.us/j/1234567890\",\r\n    \"zoom_meeting_id\": \"123-456-7890\",\r\n    \"zoom_password\": \"empower123\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/batches/add",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"batches",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get ALl Batches Details",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/batches/",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"batches",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Specific Batch Detail",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/batches/3",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"batches",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Specific Batch Detail",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\r\n  \"instructor\": \"Aniket\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/batches/3",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"batches",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Specific Batch",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/batches/3",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"batches",
+												"3"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Student",
+							"item": [
+								{
+									"name": "Register New Student",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"first_name\": \"Aniket\",\r\n  \"last_name\": \"Patil\",\r\n  \"email\": \"aniket@example.com\",\r\n  \"phone\": \"9876000000\",\r\n  \"address\": \"123 Main Street, Amravati\",\r\n  \"password\": \"MySecurePass123\",\r\n  \"confirm_password\": \"MySecurePass123\",\r\n  \"email_consent\": true\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/students/register",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"students",
+												"register"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Student Details",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/students/",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"students",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Specific Batch Detail",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/students/2",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"students",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Specific Student Details",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "// {\r\n//     \"phone\": \"9090909090\",\r\n//     \"password\": \"NehaKapoor#2025\"\r\n// }\r\n\r\n\r\n{\r\n    \"phone\": \"9988776655\",\r\n    \"password\": \"Vikas@Work2025\"\r\n}\r\n\r\n\r\n// {\r\n//     \"phone\": \"8080395823\",\r\n//     \"password\": \"Mohit@123\"\r\n// }\r\n\r\n\r\n// {\r\n//     \"phone\": \"9765123400\",\r\n//     \"password\": \"PriyaSecure123!\"\r\n// }\r\n\r\n\r\n"
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/students/update/5",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"students",
+												"update",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Specific Student",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/students/delete/5",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"students",
+												"delete",
+												"5"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Assignments",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyMjgyMTM4fQ.mkYU-WKzJA5ddIuPkhDSrplJshdn752iuuHtWGFGNQA",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "\r\n//   {\r\n//     \"student_id\": 10,\r\n//     \"assignment_title\": \"Data Cleaning Task\",\r\n//     \"description\": \"Remove null values, fix inconsistent data types, and export final CSV.\",\r\n//     \"status\": \"In Progress\"\r\n//   }\r\n\r\n\r\n//   {\r\n//     \"student_id\": 10,\r\n//     \"assignment_title\": \"Exploratory Data Analysis Report\",\r\n//     \"description\": \"Perform EDA on given dataset and summarize insights with visuals.\",\r\n//     \"status\": \"In Progress\"\r\n//   }\r\n\r\n\r\n//   {\r\n//     \"student_id\": 10,\r\n//     \"assignment_title\": \"Pandas Mini Project\",\r\n//     \"description\": \"Build a Jupyter Notebook analyzing sales data using Pandas.\",\r\n//     \"status\": \"Submitted\"\r\n//   }\r\n\r\n\r\n//   {\r\n//     \"student_id\": 10,\r\n//     \"assignment_title\": \"Python Basics Quiz\",\r\n//     \"description\": \"Completed quiz on variables, loops, functions, and data structures.\",\r\n//     \"status\": \"Completed\"\r\n//   }\r\n\r\n\r\n{\r\n  \"student_id\": 30,\r\n  \"assignment_title\": \"Intro to Python\",\r\n  \"description\": \"Write a script to calculate factorial using loops.\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/students/create-assignments",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"students",
+												"create-assignments"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Quote",
+							"item": [
+								{
+									"name": "Add New Quote",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"quote\": \"The only limit to our realization of tomorrow is our doubts of today.\",\r\n  \"author\": \"Franklin D. Roosevelt\",\r\n  \"category\": \"Motivation\",\r\n  \"color\": \"Blue\",\r\n  \"featured\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/quotes/add",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"quotes",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Quote",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/quotes/",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"quotes",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Specific Quote",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://127.0.0.1:8000/quotes/1",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"quotes",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Specific Quote",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"category\":\"Motivation\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/quotes/1",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"quotes",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Quote",
+									"request": {
+										"method": "DELETE",
+										"header": []
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Resources_for_students",
+							"item": [
+								{
+									"name": "Add New resource",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyNTQ5NDk0fQ.qOyE9jzvKlXnwPqg5OKBDIXajXGUfyty4iV6s5txq-8",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"ML Bootcamp Session 1 Recording\",\r\n  \"category_id\": 2,\r\n  \"session_id\": 12,\r\n  \"url\": \"https://example.com/ml/bootcamp/session1.mp4\",\r\n  \"description\": \"Session recording for introduction to supervised learning.\"\r\n}\r\n\r\n// {\r\n//   \"name\": \"AWS Architecture Diagram\",\r\n//   \"category_id\": 3,\r\n//   \"session_id\": 7,\r\n//   \"url\": \"https://example.com/images/aws-architecture.png\",\r\n//   \"description\": \"Architecture diagram used in cloud lecture.\"\r\n// }\r\n\r\n// {\r\n//   \"name\": \"Python Intro Notes\",\r\n//   \"category_id\": 1,\r\n//   \"session_id\": 1,\r\n//   \"url\": \"https://example.com/resources/python-intro.pdf\",\r\n//   \"description\": \"Beginner PDF notes for Python basics.\"\r\n// }\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/auth/resources/create",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"auth",
+												"resources",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Resources",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyNTQ5NDk0fQ.qOyE9jzvKlXnwPqg5OKBDIXajXGUfyty4iV6s5txq-8",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "// {\r\n//   \"name\": \"ML Bootcamp Session 1 Recording\",\r\n//   \"category_id\": 2,\r\n//   \"session_id\": 12,\r\n//   \"url\": \"https://example.com/ml/bootcamp/session1.mp4\",\r\n//   \"description\": \"Session recording for introduction to supervised learning.\"\r\n// }\r\n\r\n// {\r\n//   \"name\": \"AWS Architecture Diagram\",\r\n//   \"category_id\": 3,\r\n//   \"session_id\": 7,\r\n//   \"url\": \"https://example.com/images/aws-architecture.png\",\r\n//   \"description\": \"Architecture diagram used in cloud lecture.\"\r\n// }\r\n\r\n{\r\n  \"name\": \"Python Intro Notes\",\r\n  \"category_id\": 1,\r\n  \"session_id\": 1,\r\n  \"url\": \"https://example.com/resources/python-intro.pdf\",\r\n  \"description\": \"Beginner PDF notes for Python basics.\"\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/auth/resources/all_resources",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"auth",
+												"resources",
+												"all_resources"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Resource",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyNTQ5NDk0fQ.qOyE9jzvKlXnwPqg5OKBDIXajXGUfyty4iV6s5txq-8",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://127.0.0.1:8000/auth/resources/delete/3",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"auth",
+												"resources",
+												"delete",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update resources",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyODkyMDMxfQ.mo2vwnKLZnEcnMS4V9Rs_uCJnF7YCwVst32X3mX0ROg",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"name\": \"Updated Python Notes\",\r\n  \"url\": \"https://example.com/updated.pdf\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/auth/resources/update/1",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"auth",
+												"resources",
+												"update",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Clarity_Call",
+							"item": [
+								{
+									"name": "Create Clarity Call",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyMzY1NTcyfQ.5kro00XR4hhmE_KROLbexAi6bTMrb1kWoyGJc7EBnVA",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "// {\r\n//   \"student_id\": 6,\r\n//   \"mentor_name\": \"Ankit Verma\",\r\n//   \"call_status\": \"Scheduled\",\r\n//   \"scheduled_date\": \"2025-11-12 11:00:00\",\r\n//   \"note\": \"Discuss career roadmap and required skills\"\r\n// }\r\n\r\n\r\n// {\r\n//   \"student_id\": 33,\r\n//   \"mentor_name\": \"Ravi Sharma\",\r\n//   \"call_status\": \"Scheduled\",\r\n//   \"scheduled_date\": \"2025-11-08 16:00:00\",\r\n//   \"note\": \"Review progress and next assignment\"\r\n// }\r\n\r\n\r\n{\r\n  \"student_id\": 29,\r\n  \"mentor_name\": \"Amol Kale\",\r\n  \"call_status\": \"Scheduled\",\r\n  \"scheduled_date\": \"2025-11-12 11:45:00\",\r\n  \"note\": \"Discuss career roadmap and required skills\"\r\n}\r\n\r\n\r\n// {\r\n//   \"student_id\": 9999,\r\n//   \"mentor_name\": \"Ravi Sharma\",\r\n//   \"call_status\": \"Scheduled\",\r\n//   \"scheduled_date\": \"2025-11-10 14:30:00\",\r\n//   \"note\": \"Non existing student\"\r\n// }\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/clarity_call/create",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"clarity_call",
+												"create"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/delete_clarity_call",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyODkyMDMxfQ.mo2vwnKLZnEcnMS4V9Rs_uCJnF7YCwVst32X3mX0ROg",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "// {\r\n//   \"student_id\": 6,\r\n//   \"mentor_name\": \"Ankit Verma\",\r\n//   \"call_status\": \"Scheduled\",\r\n//   \"scheduled_date\": \"2025-11-12 11:00:00\",\r\n//   \"note\": \"Discuss career roadmap and required skills\"\r\n// }\r\n\r\n\r\n// {\r\n//   \"student_id\": 33,\r\n//   \"mentor_name\": \"Ravi Sharma\",\r\n//   \"call_status\": \"Scheduled\",\r\n//   \"scheduled_date\": \"2025-11-08 16:00:00\",\r\n//   \"note\": \"Review progress and next assignment\"\r\n// }\r\n\r\n\r\n{\r\n  \"student_id\": 29,\r\n  \"mentor_name\": \"Amol Kale\",\r\n  \"call_status\": \"Scheduled\",\r\n  \"scheduled_date\": \"2025-11-12 11:45:00\",\r\n  \"note\": \"Discuss career roadmap and required skills\"\r\n}\r\n\r\n\r\n// {\r\n//   \"student_id\": 9999,\r\n//   \"mentor_name\": \"Ravi Sharma\",\r\n//   \"call_status\": \"Scheduled\",\r\n//   \"scheduled_date\": \"2025-11-10 14:30:00\",\r\n//   \"note\": \"Non existing student\"\r\n// }\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/clarity_call/delete/4",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"clarity_call",
+												"delete",
+												"4"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "update-clarity-call/",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyODkyMDMxfQ.mo2vwnKLZnEcnMS4V9Rs_uCJnF7YCwVst32X3mX0ROg",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"mentor_name\": \"Sneha Kapoor\",\r\n  \"scheduled_date\": \"2025-11-09 10:30:00\",\r\n  \"notes\": \"Student showed strong interest in ML topics.\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/clarity_call/update/1",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"clarity_call",
+												"update",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all clarity_calls",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyODkyMDMxfQ.mo2vwnKLZnEcnMS4V9Rs_uCJnF7YCwVst32X3mX0ROg",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://127.0.0.1:8000/admin/clarity_call/",
+											"protocol": "http",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "8000",
+											"path": [
+												"admin",
+												"clarity_call",
+												""
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "/auth/admin/profile",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYwNTE2Mzk3fQ.APKChwgLDD3v4vk0ubCWKdEF-3nG8_nN1oYchM_1haE",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/admin/profile",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"admin",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/admin-dashboard",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYxOTMzMDI0fQ._3fPL99YzyazIDyspBo2qTWKsVAC8W-mtB5t_Tz35Rw",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8000/admin-dashboard",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"admin-dashboard"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/admin/logout",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6MSwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzYyMjgyMTM4fQ.mkYU-WKzJA5ddIuPkhDSrplJshdn752iuuHtWGFGNQA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"admin@stei.pro\",\r\n    \"password\":\"Admin@123\"\r\n}"
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/admin/logout",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"admin",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/auth/admin/login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"admin@stei.pro\",\r\n    \"password\":\"Admin@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/auth/admin/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"auth",
+										"admin",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

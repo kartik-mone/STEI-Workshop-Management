@@ -7,9 +7,10 @@ from auth.jwt.jwt_auth import require_student
 update_student_router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
-# -------------------------
+
 # Update request model
 # -------------------------
+
 class StudentUpdate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
@@ -21,7 +22,17 @@ class StudentUpdate(BaseModel):
     gender: Optional[Literal["male", "female", "other"]] = None
 
 
+# Helper — check profile completion
 # -------------------------
+
+def is_profile_complete(s: dict):
+    required_fields = [
+        "first_name", "last_name", "email", "phone",
+        "address", "profession", "designation", "gender"
+    ]
+    return all(s.get(f) not in (None, "", False) for f in required_fields)
+
+
 # Update endpoint
 # -------------------------
 @update_student_router.put("/student/update")
@@ -38,32 +49,52 @@ def update_student_profile(
     if not data:
         raise HTTPException(status_code=400, detail="No valid fields provided to update")
 
-    # Optional: prevent email change if you don’t allow it
+    # Prevent duplicate email
     if "email" in data:
         with conn.cursor() as cursor:
-            cursor.execute("SELECT student_id FROM students WHERE email = %s", (data["email"],))
+            cursor.execute("SELECT student_id FROM students WHERE email=%s", (data["email"],))
             existing = cursor.fetchone()
-            if existing and existing[0] != student_id:
+            if existing and existing["student_id"] != student_id:
                 raise HTTPException(status_code=400, detail="Email already in use")
 
-    # Build SQL dynamically
+    # Build update SQL dynamically
     set_parts = [f"{field}=%s" for field in data.keys()]
     values = list(data.values())
     values.append(student_id)
 
-    query = f"UPDATE students SET {', '.join(set_parts)} WHERE student_id=%s"
+    update_query = f"UPDATE students SET {', '.join(set_parts)} WHERE student_id=%s"
 
-    with conn.cursor(dictionary=True) as cursor:
-        cursor.execute(query, tuple(values))
+    with conn.cursor() as cursor:
+        cursor.execute(update_query, tuple(values))
         conn.commit()
 
-        cursor.execute("SELECT * FROM students WHERE student_id=%s", (student_id,))
-        updated_student = cursor.fetchone()
+        # Fetch updated row
+        cursor.execute(
+            """
+            SELECT first_name, last_name, email, phone, address,
+                   profession, designation, gender
+            FROM students WHERE student_id=%s
+            """,
+            (student_id,)
+        )
+        updated = cursor.fetchone()
 
-    if not updated_student:
+    if not updated:
         raise HTTPException(status_code=404, detail="Student not found after update")
+
+    # Determine profile completion
+    profile_done = is_profile_complete(updated)
+
+    # Update DB
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "UPDATE students SET profile_completed=%s WHERE student_id=%s",
+            (profile_done, student_id)
+        )
+        conn.commit()
 
     return {
         "message": "Profile updated successfully",
-        "student": updated_student
+        "profile_completed": bool(profile_done),
+        "student": updated
     }

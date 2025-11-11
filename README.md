@@ -1,202 +1,337 @@
-# STEI Workshop Management - FastAPI
 
-A Workshop Management System built with **FastAPI**, designed to manage workshops, batches, students, categories, quotes, and authentication for both **Admins** and **Students**.
-This project provides a structured backend API with **JWT authentication** for secure role-based access.
 
----
+#  STEI Workshop Management — FastAPI Backend
 
-## Features
+A complete backend platform for managing **workshops, batches, students, clarity calls, categories, quotes, resources, assignments**, and authentication for both **Admins & Students**.
+Built using **FastAPI + MySQL + JWT Auth**.
 
-* **Authentication**
-
-  * Student & Admin login with JWT (`Login/login.py`)
-  * Student & Admin role-based routes (`auth.py`)
-
-* **Admin Dashboard**
-
-  * Manage students, workshops, batches, categories, and quotes (`routes/admin_dashboard.py`)
-
-* **Student Features**
-
-  * Student profile & updates (`Students/student.py`, `Students/student_update.py`)
-  * Enrollments in workshops & batches (`Students/enrollments.py`)
-  * Student dashboard (`Students/student_dashboard.py`)
-  * Logout (`Students/logout.py`)
-
-* **Workshop Management**
-
-  * Add, update, delete, and fetch workshops (`routes/workshops.py`)
-
-* **Batch Management**
-
-  * Manage workshop batches (`routes/batches.py`)
-
-* **Categories**
-
-  * Manage categories (`routes/categories.py`)
-
-* **Quotes**
-
-  * Manage motivational quotes (`routes/quote.py`)
-
-* **Database**
-
-  * MySQL database integration (`db.py` and `Database.sql`)
+This system supports:
+ Admin Portal
+ Student Portal
+ Google + Microsoft Login
+ Clarity Calls (Admin + Student workflows)
+ Assignments
+ Resource Sharing
+ Workshop & Batch Scheduling
 
 ---
 
-## Project Structure
-
-```bash
-STEI WORKSHOP MANAGEMENT - FASTAPI
-│── Login/
-│   └── login.py                 # Handles login logic
-│
-│── routes/
-│   ├── admin_dashboard.py       # Admin-specific operations
-│   ├── batches.py               # Endpoints for batch operations
-│   ├── categories.py            # Endpoints for categories
-│   ├── quote.py                 # Endpoints for quotes
-│   ├── students.py              # Endpoints for student management (admin-side)
-│   └── workshops.py             # Endpoints for workshops
-│
-│── Students/
-│   ├── enrollments.py           # Student enrollments in workshops/batches
-│   ├── logout.py                # Student logout
-│   ├── student_dashboard.py     # Student dashboard view
-│   ├── student_update.py        # Student profile update
-│   └── student.py               # Student profile
-│
-│── auth.py                      # Authentication & authorization (JWT helpers)
-│── config.py                    # DB config (MySQL settings)
-│── db.py                        # DB connection
-│── Database.sql                 # SQL schema
-│── Database Connection Diagram.png  # ER diagram
-│── requirements.txt             # Dependencies
-│── Commands.txt                 # Helpful commands
-│── main.py                      # FastAPI entry point
-│── .gitignore
-│── README.md
-```
-
----
-
-## Installation
-
-### 1. Clone Repository
-
-```bash
-git clone https://github.com/your-username/stei-workshop-management.git
-cd stei-workshop-management
-```
-
-### 2. Create Virtual Environment
-
-```bash
-python -m venv venv
-venv\Scripts\activate   # On Windows
-# OR
-source venv/bin/activate  # On Linux/Mac
-```
-
-### 3. Install Requirements
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Database Setup
-
-1. Install MySQL and create a database.
-2. Import the schema:
-
-   ```bash
-   mysql -u root -p your_db_name < Database.sql
-   ```
-3. Configure `config.py` with your MySQL credentials:
-
-   ```python
-   MYSQL_CONFIG = {
-       "host": "localhost",
-       "user": "root",
-       "password": "password",
-       "database": "stei"
-   }
-   ```
-
----
-
-## Run the Server
-
-```bash
-uvicorn main:app --reload
-```
-
-API available at:
-`http://127.0.0.1:8000`
-Swagger UI: `http://127.0.0.1:8000/docs`
-
----
-
-## API Endpoints
+##  Features Overview
 
 ### Authentication
 
-* `POST /auth/student/login` → Student login
-* `POST /auth/admin/login` → Admin login
-* `GET /auth/student/profile` → Student profile
-* `GET /auth/admin/profile` → Admin profile
-* `POST /students/logout` → Student logout
-
-### Students
-
-* `POST /students/register` → Register new student
-* `GET /students/` → Get all students (admin only)
-* `GET /students/{id}` → Get student by ID
-* `PUT /students/{id}` → Update student info
-* `DELETE /students/{id}` → Delete student
-* `GET /students/dashboard` → Student dashboard
-* `POST /students/enroll` → Enroll student in a workshop/batch
-
-### Workshops
-
-* `POST /workshops/add` → Add workshop (admin only)
-* `GET /workshops/` → List workshops
-* `PUT /workshops/{id}` → Update workshop (admin only)
-* `DELETE /workshops/{id}` → Delete workshop (admin only)
-
-### Batches
-
-* `POST /batches/add` → Add batch (admin only)
-* `PUT /batches/{id}` → Update batch (admin only)
-
-### Categories
-
-* `POST /categories/add` → Add category (admin only)
-* `GET /categories/` → Get all categories
-* `GET /categories/{id}` → Get specific category
-* `PUT /categories/{id}` → Update category (admin only)
-* `DELETE /categories/{id}` → Delete category (admin only)
-
-### Quotes
-
-* `POST /quotes/add` → Add quote (admin only)
-* `GET /quotes/` → Get all quotes
-* `GET /quotes/{id}` → Get specific quote
-* `PUT /quotes/{id}` → Update quote (admin only)
-* `DELETE /quotes/{id}` → Delete quote (admin only)
+* Student login + registration
+* Admin login
+* Secure JWT-based authorization
+* Google OAuth login
+* Microsoft OAuth login
+* OTP email flow
+* Logout
 
 ---
 
-## Tech Stack
+### 🧑‍🎓 Student Features
 
-* Python 3.10+
-* FastAPI
-* MySQL
-* Pydantic
-* Uvicorn
-* PyMySQL
-* JWT Authentication
+* Student registration
+* Profile update
+* Profile completion tracking
+* Dashboard
+* Workshop/Batch enrollments
+* View resources (when profile complete)
+* Clarity call questionnaire (MCQ)
+* View clarity call status + history
+* Cleanup incomplete assignments
+
+---
+
+### 🧑‍💼 Admin Features
+
+* Admin dashboard (revenue, workshop, batch stats)
+* Student management (CRUD)
+* Workshop management (CRUD)
+* Batch management (CRUD)
+* Category management (CRUD)
+* Quotes management (CRUD)
+* Clarity call management (CRUD)
+* Student assignments creation
+* Resource management (CRUD)
+
+---
+
+##  Tech Stack
+
+| Component | Tech                |
+| --------- | ------------------- |
+| Language  | Python 3.10+        |
+| Framework | FastAPI             |
+| Database  | MySQL               |
+| ORM       | Raw SQL             |
+| Auth      | JWT                 |
+| Email     | SMTP via send_email |
+| OAuth     | Google + Microsoft  |
+| Server    | Uvicorn             |
+
+---
+
+##  Project Structure
+
+```
+STEI-Workshop-Management/
+│
+├── Admin/
+│   ├── admin_dashboard.py        # Dashboard stats: revenue, workshops, batches
+│   ├── batches.py                # Admin batch CRUD
+│   ├── categories.py             # Admin categories CRUD
+│   ├── clarity_call.py           # Admin clarity-call CRUD
+│   ├── quote.py                  # Admin quotes CRUD
+│   ├── resources_student.py      # Admin resource mgmt
+│   ├── students.py               # Admin student mgmt CRUD
+│   └── workshops.py              # Admin workshop CRUD
+│
+├── auth/
+│   ├── jwt/
+│   │   ├── jwt_auth.py           # JWT auth helpers
+│   │   └── password_auth.py      # Password hashing
+│   ├── Login_Logout/
+│   │   ├── login.py              # All logins
+│   │   └── logout.py             # Logout
+│   ├── Google_Login/
+│   │   └── oauth_google.py       # Google OAuth
+│   ├── Microsoft_Login/
+│   │   └── oauth_microsoft.py    # Microsoft OAuth
+│   └── OTP/
+│       ├── otp_auth.py           # OTP verify
+│       └── send_email.py         # Email sender
+│
+├── Students/
+│   ├── clarity_call.py           # Pre-call Q/A + history
+│   ├── enrollments.py            # Workshop/Batch enroll
+│   ├── resources.py              # View resources
+│   ├── student_dashboard.py      # Dashboard
+│   ├── student_update.py         # Student profile update
+│   └── student.py                # Student create + profile stats
+│
+├── database/
+│   ├── Database.sql              # SQL schema
+│   ├── Database Connection Diagram.png
+│   └── db.py                     # DB connection
+│
+├── main.py                       # FastAPI entry
+├── config.py                     # DB config env settings
+├── .env                          # Env vars
+├── requirements.txt              # Dependencies
+├── README.md
+└── .gitignore
+```
+
+---
+
+##  Database Setup
+
+1. Create database
+
+```sql
+CREATE DATABASE stei;
+```
+
+2. Run schema
+
+```bash
+mysql -u root -p stei < Database.sql
+```
+
+3. Configure DB
+   `config.py`
+
+```python
+MYSQL_CONFIG = {
+    "host": "localhost",
+    "user": "root",
+    "password": "YOUR_PASSWORD",
+    "database": "stei"
+}
+```
+
+---
+
+##  Install & Run
+
+### 1) Clone
+
+```
+git clone https://github.com/kartik-mone/STEI-Workshop-Management-
+cd STEI-Workshop-Management
+```
+
+### 2) Create venv
+
+```
+python -m venv venv
+source venv/bin/activate   # mac/linux
+venv\Scripts\activate      # windows
+```
+
+### 3) Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+### 4) Start server
+
+```
+uvicorn main:app --reload
+```
+
+### Docs:
+
+* Swagger → [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+* ReDoc → [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
+
+---
+
+##  Major API Endpoints
+
+> Only key highlights — each module has many.
+
+### Auth
+
+| Method | Route               |
+| ------ | ------------------- |
+| POST   | /auth/student/login |
+| POST   | /auth/admin/login   |
+| POST   | /auth/google        |
+| POST   | /auth/microsoft     |
+| POST   | /auth/otp           |
+| POST   | /auth/logout        |
+
+---
+
+### Students
+
+| Method | Route                                              |
+| ------ | -------------------------------------------------- |
+| POST   | /student/register                                  |
+| GET    | /student/dashboard/profile                         |
+| GET    | /student/dashboard/profile_completion              |
+| PUT    | /auth/student/update                               |
+| GET    | /student/clarity_call/precall_questionnaire        |
+| POST   | /student/clarity_call/submit_precall_questionnaire |
+| GET    | /student/clarity_call/history                      |
+
+---
+
+###  Admin
+
+| Method | Route                           |
+| ------ | ------------------------------- |
+| GET    | /admin-dashboard/               |
+| POST   | /admin/students/register        |
+| PUT    | /admin/students/update/{id}     |
+| DELETE | /admin/students/delete/{id}     |
+| POST   | /admin/clarity_call/create      |
+| PUT    | /admin/clarity_call/update/{id} |
+| DELETE | /admin/clarity_call/delete/{id} |
+
+---
+
+###  Workshops & Batches
+
+| Method | Route                                  |
+| ------ | -------------------------------------- |
+| POST   | /workshops/add                         |
+| PUT    | /workshops/update/{id}                 |
+| DELETE | /workshops/delete/{id}                 |
+| POST   | /enrollments/enroll/{workshop}/{batch} |
+
+---
+
+###  Resources
+
+| Method | Route                       |
+| ------ | --------------------------- |
+| POST   | /auth/resources/create      |
+| PUT    | /auth/resources/update/{id} |
+| DELETE | /auth/resources/delete/{id} |
+| GET    | /auth/resources             |
+| GET    | /auth/resources/categories  |
+
+---
+
+##  Clarity Call Workflow
+
+### Student
+
+1. View status → `/student/clarity_call/clarity_call_status`
+2. View questions → `/student/clarity_call/precall_questionnaire`
+3. Submit MCQ → `/student/clarity_call/submit_precall_questionnaire`
+4. History → `/student/clarity_call/history`
+
+### Admin
+
+* Create, update, delete clarity calls
+* View call history
+* Assign calls to student + mentor
+
+---
+
+##  OAuth — Google & Microsoft
+
+### Google OAuth
+
+```
+POST /auth/google/login
+```
+
+Handles:
+
+* Code exchange
+* Identity token validation
+* Auto-register + login
+* Returns JWT
+
+### Microsoft OAuth
+
+```
+POST /auth/microsoft/login
+```
+
+Similar process using Microsoft identity endpoint.
+
+Both fallback to:
+
+* Create student if new
+* Generate JWT token
+
+---
+
+##  Requirements
+
+```
+fastapi
+uvicorn[standard]
+pydantic
+pydantic[email]
+pymysql
+python-dotenv
+PyJWT
+cryptography
+python-jose
+passlib
+requests
+```
+
+---
+
+##  Future Improvements
+
+* Fetch overall analytics
+* Handle clarity call payment 
+* Add password reset
+
+---
+
+##  License
+
+Private / Internal project
 

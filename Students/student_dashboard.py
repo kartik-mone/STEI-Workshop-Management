@@ -15,7 +15,7 @@ def get_student_dashboard(student=Depends(require_student), conn=Depends(get_db_
     query = """
         SELECT 
             s.student_id, s.first_name, s.last_name, s.email, s.phone, s.address,
-            s.profession, s.designation, s.gender,
+            s.profession, s.designation, s.gender, s.status,
             se.status AS enrollment_status, se.enrollment_date,
             b.batch_name, b.status AS batch_status,
             w.name AS workshop_name
@@ -44,6 +44,7 @@ def get_student_dashboard(student=Depends(require_student), conn=Depends(get_db_
         "profession": rows[0]["profession"],
         "designation": rows[0]["designation"],
         "gender": rows[0]["gender"],
+        "status": rows[0]["status"],
         "enrollments": []
     }
 
@@ -107,23 +108,6 @@ def get_profile_completion(student=Depends(require_student), conn=Depends(get_db
     }
 
 
-#  Clean In Process Assignment 
-# -----------------------------
-@student_dashboard_router.delete("/cleanup_Assignment")
-def cleanup_inprogress_data(student=Depends(require_student), conn=Depends(get_db_connection)):
-    if not student:
-        raise HTTPException(status_code=401, detail="Unauthorized access")
 
-    student_id = student["student_id"]
-
-    with conn.cursor() as cursor:
-        # Remove in-progress assignments
-        cursor.execute("""
-            DELETE FROM student_assignments 
-            WHERE student_id = %s AND status IN ('In Progress')
-        """, (student_id,))
-
-    conn.commit()
-    return {"message": f"Removed all in-progress assignment data successfully from {student['first_name']}."}
 
 
