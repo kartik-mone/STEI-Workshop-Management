@@ -28,9 +28,8 @@ This system supports:
 * OTP email flow
 * Logout
 
----
 
-### 🧑‍🎓 Student Features
+### Student Features
 
 * Student registration
 * Profile update
@@ -42,9 +41,8 @@ This system supports:
 * View clarity call status + history
 * Cleanup incomplete assignments
 
----
 
-### 🧑‍💼 Admin Features
+###  Admin Features
 
 * Admin dashboard (revenue, workshop, batch stats)
 * Student management (CRUD)
@@ -56,7 +54,6 @@ This system supports:
 * Student assignments creation
 * Resource management (CRUD)
 
----
 
 ##  Tech Stack
 
@@ -205,7 +202,6 @@ uvicorn main:app --reload
 | POST   | /auth/otp           |
 | POST   | /auth/logout        |
 
----
 
 ### Students
 
@@ -219,7 +215,6 @@ uvicorn main:app --reload
 | POST   | /student/clarity_call/submit_precall_questionnaire |
 | GET    | /student/clarity_call/history                      |
 
----
 
 ###  Admin
 
@@ -233,7 +228,7 @@ uvicorn main:app --reload
 | PUT    | /admin/clarity_call/update/{id} |
 | DELETE | /admin/clarity_call/delete/{id} |
 
----
+
 
 ###  Workshops & Batches
 
@@ -244,7 +239,7 @@ uvicorn main:app --reload
 | DELETE | /workshops/delete/{id}                 |
 | POST   | /enrollments/enroll/{workshop}/{batch} |
 
----
+
 
 ###  Resources
 
@@ -256,7 +251,7 @@ uvicorn main:app --reload
 | GET    | /auth/resources             |
 | GET    | /auth/resources/categories  |
 
----
+
 
 ##  Clarity Call Workflow
 
